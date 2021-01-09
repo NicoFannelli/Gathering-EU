@@ -1,0 +1,124 @@
+{
+    "version": 1.02,
+    "data": {
+        "enabled": true,
+        "sendToAlert": true,
+        "plantsMarkers": false,
+        "miningMarkers": false,
+        "energyMarkers": false,
+		"duraniumMarkers": true,
+		"duranium": [
+            {
+                "id": 301,
+                "name": "Duranium",
+                "msg": "Duranium Ore"
+            },
+            {
+                "id": 601,
+                "name": "Duranium",
+                "msg": "Duranium crystal"
+            },
+			{
+                "id": 303,
+                "name": "Duranium",
+                "msg": "Duranium WTF??"
+            }
+        ],
+        "plants": [
+            {
+                "id": 1,
+                "name": "Special",
+                "msg": "Harmony Grass"
+            },
+            {
+                "id": 2,
+                "name": "Plants",
+                "msg": "Wild Cobseed"
+            },
+            {
+                "id": 3,
+                "name": "Plants",
+                "msg": "Wild Veridia"
+            },
+            {
+                "id": 4,
+                "name": "Plants",
+                "msg": "Orange Mushroom"
+            },
+            {
+                "id": 5,
+                "name": "Plants",
+                "msg": "Moongourd"
+            },
+            {
+                "id": 6,
+                "name": "Plants",
+                "msg": "Apple Tree"
+            }
+        ],
+        "mining": [
+            {
+                "id": 1,
+                "name": "Special",
+                "msg": "Harmony Grass"
+            },
+            {
+                "id": 2,
+                "name": "Plants",
+                "msg": "Wild Cobseed"
+            },
+            {
+                "id": 3,
+                "name": "Plants",
+                "msg": "Wild Veridia"
+            },
+            {
+                "id": 4,
+                "name": "Plants",
+                "msg": "Orange Mushroom"
+            },
+            {
+                "id": 5,
+                "name": "Plants",
+                "msg": "Moongourd"
+            },
+            {
+                "id": 6,
+                "name": "Plants",
+                "msg": "Apple Tree"
+            }
+        ],
+        "energy": [
+            {
+                "id": 201,
+                "name": "Special",
+                "msg": "Achromic Essence"
+            },
+            {
+                "id": 202,
+                "name": "Essence",
+                "msg": "Crimson Essence"
+            },
+            {
+                "id": 203,
+                "name": "Essence",
+                "msg": "Earth Essence"
+            },
+            {
+                "id": 204,
+                "name": "Essence",
+                "msg": "Azure Essence"
+            },
+            {
+                "id": 205,
+                "name": "Essence",
+                "msg": "Opal Essence"
+            },
+            {
+                "id": 206,
+                "name": "Essence",
+                "msg": "Obsidian Essence"
+            }
+        ]
+    }
+}

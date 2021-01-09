@@ -13,6 +13,7 @@ gat status | Status module
 gat ore | ore display
 gat plants | plants display
 gat energy | energy display
+get duranium | duranium display
 
 ------
 

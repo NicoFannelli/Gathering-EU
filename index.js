@@ -1,114 +1,131 @@
 module.exports = function Gathering(mod) {
-	let plantsMarkers = false,
-		miningMarkers = false,
-		energyMarkers = false
-	
 	let mobid = [],
-		gatherMarker = []
-	
+		gatherMarker = [];
+
 	function gatheringStatus() {
-		sendStatus(
+		sendStatus("",
 			"Gathering: " + (mod.settings.enabled  ? "On"   : "Off"),
 			"alert: " + (mod.settings.sendToAlert  ? "on" : "off"),
-			
-			"plants: " + (plantsMarkers ? "on" : "off"),
-			"ore: " + (miningMarkers ? "on" : "off"),
-			"energy: " + (energyMarkers ? "on" : "off")
-		)
+			"plants: " + (mod.settings.plantsMarkers ? "on" : "off"),
+			"ore: " + (mod.settings.miningMarkers ? "on" : "off"),
+			"energy: " + (mod.settings.energyMarkers ? "on" : "off"),
+			"duranium: " + (mod.settings.duraniumMarkers ? "on" : "off")
+		);
 	}
-	
+
 	function sendStatus(msg) {
-		sendMessage([...arguments].join('\n\t - '))
+		sendMessage([...arguments].join('\n\t'));
 	}
-	
+
 	mod.command.add("gat", (arg) => {
 		if (!arg) {
 			mod.settings.enabled = !mod.settings.enabled;
 			if (!mod.settings.enabled) {
-				plantsMarkers = false
-				miningMarkers = false
-				energyMarkers = false
 				for (let itemId of mobid) {
-					despawnItem(itemId)
+					despawnItem(itemId);
 				}
 			}
-			gatheringStatus()
+			gatheringStatus();
 		} else {
 			switch (arg) {
 				case "alert":
-					mod.settings.sendToAlert = !mod.settings.sendToAlert
-					sendMessage("Warning message " + (mod.settings.sendToAlert ? "on" : "off"))
+					mod.settings.sendToAlert = !mod.settings.sendToAlert;
+					sendMessage("Warning message: " + (mod.settings.sendToAlert ? "on" : "off"));
 					break
 				case "status":
-					gatheringStatus()
+					gatheringStatus();
 					break
-				
 				case "plants":
-					plantsMarkers = !plantsMarkers
-					sendMessage("plants " + (plantsMarkers ? "on" : "off"))
+					mod.settings.plantsMarkers = !mod.settings.plantsMarkers;
+					sendMessage("Plants: " + (mod.settings.plantsMarkers ? "on" : "off"));
 					break
 				case "ore":
-					miningMarkers = !miningMarkers
-					sendMessage("ore " + (miningMarkers ? "on" : "off"))
+					mod.settings.miningMarkers = !mod.settings.miningMarkers;
+					sendMessage("Ore: " + (mod.settings.miningMarkers ? "on" : "off"));
 					break
 				case "energy":
-					energyMarkers = !energyMarkers
-					sendMessage("energy " + (energyMarkers ? "on" : "off"))
+					mod.settings.energyMarkers = !mod.settings.energyMarkers;
+					sendMessage("Energy: " + (mod.settings.energyMarkers ? "on" : "off"));
 					break
-				
-				default :
-					sendMessage("Invalid parameter!")
+				case "duranium":
+					mod.settings.duraniumMarkers = !mod.settings.duraniumMarkers;
+					sendMessage("Duranium: " + (mod.settings.duraniumMarkers ? "on" : "off"));
+					break	
+				default:
+					sendStatus("",
+						"gat",
+						"gat alert",
+						"gat status",
+						"gat ore",
+						"gat plants",
+						"gat energy"
+					);
 					break
 			}
 		}
 	})
-	
+
 	mod.game.me.on('change_zone', (zone, quick) => {
-		mobid = []
+		mobid = [];
 	})
-	
+
 	mod.hook('S_SPAWN_COLLECTION', 4, (event) => {
 		if (mod.settings.enabled) {
-			if (plantsMarkers && (gatherMarker = mod.settings.plants.find(obj => obj.id === event.id))) {
-				sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44)
-				sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg)
-			} else if (miningMarkers && (gatherMarker = mod.settings.mining.find(obj => obj.id === event.id))) {
-				sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44)
-				sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg)
-			} else if (energyMarkers && (gatherMarker = mod.settings.energy.find(obj => obj.id === event.id))) {
-				sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44)
-				sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg)
+			//sendMessage( ("Found [" + event.id + "] " ), 44);
+			if (mod.settings.plantsMarkers && (gatherMarker = mod.settings.plants.find(obj => obj.id === event.id))) {
+				if (mod.settings.sendToAlert) {
+					sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44);
+					sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg);
+				}
+			} else if (mod.settings.miningMarkers && (gatherMarker = mod.settings.mining.find(obj => obj.id === event.id))) {
+				if (mod.settings.sendToAlert) {
+					sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44);
+					sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg);
+				}
+			} else if (mod.settings.duraniumMarkers && (gatherMarker = mod.settings.duranium.find(obj => obj.id === event.id))) {
+				if (mod.settings.sendToAlert) {
+					sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44);
+					sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg);
+				}				
+			} else if (mod.settings.energyMarkers && (gatherMarker = mod.settings.energy.find(obj => obj.id === event.id))) {
+				if (mod.settings.sendToAlert) {
+					sendAlert( ("Found [" + gatherMarker.name + "] " + gatherMarker.msg), 44);
+					sendMessage("Found [" + gatherMarker.name + "] " + gatherMarker.msg);
+				}
 			} else {
-				return true
+				//sendAlert( ("Found [" + event.id + "] " ), 44);
+				return true;
 			}
-			
-			spawnItem(event.gameId, event.loc)
-			mobid.push(event.gameId)
+
+			spawnItem(event.gameId, event.loc);
+			mobid.push(event.gameId);
 		}
 	})
-	
+
 	mod.hook('S_DESPAWN_COLLECTION', 2, (event) => {
 		if (mobid.includes(event.gameId)) {
-			gatherMarker = []
-			despawnItem(event.gameId)
-			mobid.splice(mobid.indexOf(event.gameId), 1)
+			gatherMarker = [];
+			despawnItem(event.gameId);
+			mobid.splice(mobid.indexOf(event.gameId), 1);
 		}
 	})
-	
+
 	function spawnItem(gameId, loc) {
-		mod.send('S_SPAWN_DROPITEM', 8, {
+		loc.z -= 40;
+		mod.send('S_SPAWN_DROPITEM', 9, {
 			gameId: gameId*10n,
 			loc: loc,
-			item: mod.settings.markerId,
+			item: 88704, // velika banket coin
 			amount: 1,
-			expiry: 999999
-		})
+			expiry: 0,
+			owners: []
+		});
 	}
-	
+
 	function despawnItem(gameId) {
 		mod.send('S_DESPAWN_DROPITEM', 4, {
 			gameId: gameId*10n
-		})
+		});
 	}
 	
 	function sendMessage(msg) { mod.command.message(msg) }
@@ -119,6 +136,6 @@ module.exports = function Gathering(mod) {
 			chat: false,
 			channel: 0,
 			message: msg,
-		})
-	}	
+		});
+	}
 }
