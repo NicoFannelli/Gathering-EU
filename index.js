@@ -111,7 +111,7 @@ module.exports = function Gathering(mod) {
 	})
 
 	function spawnItem(gameId, loc) {
-		loc.z -= 40;
+		loc.z -= 100;
 		mod.send('S_SPAWN_DROPITEM', 9, {
 			gameId: gameId*10n,
 			loc: loc,
